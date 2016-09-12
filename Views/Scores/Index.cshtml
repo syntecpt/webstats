@@ -1,37 +1,77 @@
-﻿@model IEnumerable<webstats.Models.Score>
+﻿@model webstats.Models.ScoreViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Scores";
 }
 
-<h2>Index</h2>
+<h2>All Scores</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @{
+        if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Create New", "Create")
+        }
+    }
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ScoreDate)
+            @Html.DisplayNameFor(model => model.users.FirstOrDefault().UserName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.score)
+            @Html.DisplayNameFor(model => model.games.FirstOrDefault().name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.scores.FirstOrDefault().score)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.scores.FirstOrDefault().ScoreDate)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.scores) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ScoreDate)
+            @{
+                foreach (var user in Model.users)
+                {
+                    if (user.Id.Equals(item.UserID))
+                    {
+                        @Html.DisplayFor(modelItem => user.UserName)
+                    }
+                }
+            }
+        </td>
+        <td>
+            @{
+                foreach (var game in Model.games)
+                {
+                    if (game.GameID.Equals(item.GameID))
+                    {
+                        @Html.DisplayFor(modelItem => game.name)
+                    }
+                }
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.score)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ScoreID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ScoreID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ScoreID })
+            @Html.DisplayFor(modelItem => item.ScoreDate)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.ScoreID })
+            @{
+                if (User.IsInRole("Admin"))
+                {
+                    @: | @Html.ActionLink("Edit", "Edit", new { id = item.ScoreID }) |
+            @Html.ActionLink("Delete", "Delete", new
+            {
+                id = item.ScoreID })
+                }
+            }
         </td>
     </tr>
 }

@@ -1,4 +1,4 @@
-﻿@model webstats.Models.Score
+﻿@model webstats.Models.ScoreDetailsViewModel
 
 @{
     ViewBag.Title = "Delete";
@@ -8,23 +8,53 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Score</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ScoreDate)
+            @Html.DisplayNameFor(model => model.score.UserID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ScoreDate)
+            @{
+                foreach (var user in Model.users)
+                {
+                    if (user.Id.Equals(Model.score.UserID))
+                    {
+                        @Html.DisplayFor(model => user.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    }
+                }
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.score.GameID)
+        </dt>
+
+        <dd>
+            @{
+                foreach (var game in Model.games)
+                {
+                    if (game.GameID.Equals(Model.score.GameID))
+                    {
+                        @Html.DisplayFor(model => game.name, new { htmlAttributes = new { @class = "form-control" } })
+                    }
+                }
+            }
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.score)
+            @Html.DisplayNameFor(model => model.score.ScoreDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.score)
+            @Html.DisplayFor(model => model.score.ScoreDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.score.score)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.score.score)
         </dd>
 
     </dl>

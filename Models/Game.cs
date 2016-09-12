@@ -10,8 +10,10 @@ namespace webstats.Models
     {
         public int GameID { get; set; }
         [Required]
+        [Display(Name = "Game Name")]
         public string name { get; set; }
         [Required]
+        [Display(Name = "Genre")]
         public string genre { get; set; }
     }
 }

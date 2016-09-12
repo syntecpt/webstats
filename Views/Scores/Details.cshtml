@@ -1,34 +1,71 @@
-﻿@model webstats.Models.Score
+﻿@model webstats.Models.ScoreDetailsViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Score Details";
 }
 
-<h2>Details</h2>
+<h2>Score Details</h2>
 
 <div>
-    <h4>Score</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ScoreDate)
+            @Html.DisplayNameFor(model => model.score.GameID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ScoreDate)
+            @{
+                foreach (var game in Model.games)
+                {
+                    if (game.GameID.Equals(Model.score.GameID))
+                    {
+                        @Html.DisplayFor(modelItem => game.name)
+                    }
+                }
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.score.UserID)
+        </dt>
+
+        <dd>
+            @{
+                foreach (var user in Model.users)
+                {
+                    if (user.Id.Equals(Model.score.UserID))
+                    {
+                        @Html.DisplayFor(modelItem => user.UserName)
+                    }
+                }
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.score.ScoreDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.score.ScoreDate)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.score)
+            @Html.DisplayNameFor(model => model.score.score)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.score)
+            @Html.DisplayFor(model => model.score.score)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ScoreID }) |
+    @{
+        if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.score.ScoreID })
+            @: |
+            @Html.ActionLink("Delete", "Delete", new { id = Model.score.ScoreID })
+            @:<hr />
+        }
+    }
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -17,7 +17,12 @@ namespace webstats.Controllers
         // GET: Scores
         public ActionResult Index()
         {
-            return View(db.Scores.ToList());
+            return View(new ScoreViewModel
+            {
+                games = db.Games.ToList(),
+                users = db.Users.ToList(),
+                scores = db.Scores.ToList()
+            });
         }
 
         // GET: Scores/Details/5
@@ -33,15 +38,18 @@ namespace webstats.Controllers
             {
                 return HttpNotFound();
             }
-            return View(score);
+            return View(new ScoreDetailsViewModel
+            {
+                games = db.Games.ToList(),
+                users = db.Users.ToList(),
+                score = score
+            });
         }
 
         // GET: Scores/Submit
         public ActionResult Submit()
         {
-            ViewBag.GameID = new SelectList(db.Games, "GameID", "name");
-            ViewBag.UserID = new SelectList(db.Users, "Id", "UserName");
-            return View(new ScoreViewModel
+            return View(new CreateScoreViewModel
             {
                 games = db.Games.ToList(),
                 users = db.Users.ToList()
@@ -68,6 +76,7 @@ namespace webstats.Controllers
         }
 
         // GET: Scores/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,8 +88,12 @@ namespace webstats.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.GameID = new SelectList(db.Games, "GameID", "name", score.GameID);
-            return View(score);
+            return View(new ScoreDetailsViewModel
+            {
+                games = db.Games.ToList(),
+                users = db.Users.ToList(),
+                score = score
+            });
         }
 
         // POST: Scores/Edit/5
@@ -88,6 +101,7 @@ namespace webstats.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "ScoreID,GameID,UserID,ScoreDate,score")] Score score)
         {
             if (ModelState.IsValid)
@@ -96,11 +110,16 @@ namespace webstats.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.GameID = new SelectList(db.Games, "GameID", "name", score.GameID);
-            return View(score);
+            return View(new ScoreDetailsViewModel
+            {
+                games = db.Games.ToList(),
+                users = db.Users.ToList(),
+                score = score
+            });
         }
 
         // GET: Scores/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -112,12 +131,18 @@ namespace webstats.Controllers
             {
                 return HttpNotFound();
             }
-            return View(score);
+            return View(new ScoreDetailsViewModel
+            {
+                games = db.Games.ToList(),
+                users = db.Users.ToList(),
+                score = score
+            });
         }
 
         // POST: Scores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Score score = db.Scores.Find(id);

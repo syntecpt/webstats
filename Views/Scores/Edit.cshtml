@@ -1,4 +1,4 @@
-﻿@model webstats.Models.Score
+﻿@model webstats.Models.ScoreDetailsViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -15,21 +15,53 @@
         <h4>Score</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ScoreID)
+        @Html.HiddenFor(model => model.score.ScoreID)
+        @Html.HiddenFor(model => model.score.UserID)
+        @Html.HiddenFor(model => model.score.GameID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ScoreDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.score.UserID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ScoreDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ScoreDate, "", new { @class = "text-danger" })
+                @{
+                    foreach (var user in Model.users)
+                    {
+                        if (user.Id.Equals(Model.score.UserID))
+                        {
+                            @Html.DisplayFor(model => user.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                        }
+                    }
+                }
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.score, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.score.GameID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.score, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.score, "", new { @class = "text-danger" })
+                @{
+                    foreach (var game in Model.games)
+                    {
+                        if (game.GameID.Equals(Model.score.GameID))
+                        {
+                            @Html.DisplayFor(model => game.name, new { htmlAttributes = new { @class = "form-control" } })
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.score.ScoreDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.score.ScoreDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.score.ScoreDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.score.score, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.score.score, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.score.score, "", new { @class = "text-danger" })
             </div>
         </div>
 

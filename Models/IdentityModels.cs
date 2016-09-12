@@ -29,5 +29,7 @@ namespace webstats.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<webstats.Models.Game> Games { get; set; }
     }
 }

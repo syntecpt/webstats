@@ -11,10 +11,9 @@ namespace webstats.Models
         public int ScoreID { get; set; }
         [Required]
         public int GameID { get; set; }
-        public Game game { get; set; }
         [Required]
-        public int UserID { get; set; }
-        public ApplicationUser user { get; set; }
+        [StringLength(128)]
+        public string UserID { get; set; }
         [DataType(DataType.Date)]
         [Required]
         public DateTime? ScoreDate { get; set; }

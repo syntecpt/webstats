@@ -31,5 +31,7 @@ namespace webstats.Models
         }
 
         public System.Data.Entity.DbSet<webstats.Models.Game> Games { get; set; }
+
+        public System.Data.Entity.DbSet<webstats.Models.Score> Scores { get; set; }
     }
 }

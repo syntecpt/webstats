@@ -12,13 +12,12 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Score</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.score.GameID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(x=>Model.score.GameID, new SelectList(Model.games, "GameID", "name"))
+                @Html.DropDownListFor(x=>Model.score.GameID, new SelectList(Model.mygames, "GameID", "name"))
                 @Html.ValidationMessageFor(model => model.score.GameID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -26,7 +25,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.score.UserID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(x => Model.score.UserID, new SelectList(Model.users, "Id", "UserName"))
+           
+                @Html.DropDownListFor(x => Model.score.UserID, new SelectList(Model.users, "Id", "UserName"))           
                 @Html.ValidationMessageFor(model => model.score.UserID, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -22,6 +22,6 @@ namespace webstats.Models
         public DateTime? ScoreDate { get; set; }
         [Required]
         [Display(Name = "Score")]
-        public string score { get; set; }
+        public int score { get; set; }
     }
 }

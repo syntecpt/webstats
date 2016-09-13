@@ -4,8 +4,7 @@
     ViewBag.Title = "Scores";
 }
 
-<h2>All Scores</h2>
-<a class="btn btn-default" href="/scores/userscore/@User.Identity.Name">My Scores &raquo;</a>
+<h2>All Scores from @Model.users.SingleOrDefault().UserName</h2>
 
 <p>
     @{
@@ -40,7 +39,7 @@
                 {
                     if (user.Id.Equals(item.UserID))
                     {
-                        @Html.ActionLink(user.UserName, "Userscore", new { id = user.UserName })
+                        @Html.DisplayFor(modelItem => user.UserName)
                     }
                 }
             }
@@ -78,3 +77,4 @@
 }
 
 </table>
+@Html.ActionLink("Back to All Scores", "Index")

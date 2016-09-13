@@ -207,10 +207,13 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\GameScoreViewModel.cs" />
+    <Compile Include="Models\GameViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Models\ScoreViewModel.cs" />
+    <Compile Include="Models\UserGames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -287,6 +290,8 @@
     <Content Include="Views\Scores\Details.cshtml" />
     <Content Include="Views\Scores\Edit.cshtml" />
     <Content Include="Views\Scores\Index.cshtml" />
+    <Content Include="Views\Games\Mine.cshtml" />
+    <Content Include="Views\Scores\Userscore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

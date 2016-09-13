@@ -15,5 +15,6 @@ namespace webstats.Models
         [Required]
         [Display(Name = "Genre")]
         public string genre { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
     }
 }

@@ -1,0 +1,45 @@
+﻿@model webstats.Models.GameViewModel
+
+@{
+    ViewBag.Title = "My Games";
+}
+
+<h2>List of @Model.user.UserName's Games</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.games.FirstOrDefault().name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.games.FirstOrDefault().genre)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.games)
+    {
+        foreach (var game in Model.user.Games)
+        {
+            if (item.Equals(game)){
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.genre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.GameID })
+                    </td>
+                </tr>
+            }
+        }
+    }
+
+</table>
+
+<p>
+    @Html.ActionLink("Back to All Games", "Index")
+</p>

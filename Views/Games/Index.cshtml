@@ -1,26 +1,23 @@
-﻿@model IEnumerable<webstats.Models.Game>
+﻿@model webstats.Models.GameViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Games";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>List of Games</h2>
+<a class="btn btn-default" href="/games/mine">My Games &raquo;</a>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            @Html.DisplayNameFor(model => model.games.FirstOrDefault().name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.genre)
+            @Html.DisplayNameFor(model => model.games.FirstOrDefault().genre)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.games) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.name)
@@ -29,11 +26,42 @@
             @Html.DisplayFor(modelItem => item.genre)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.GameID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.GameID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.GameID })
+            @Html.ActionLink("Details", "Details", new { id = item.GameID })
+            @{
+                int count = 0;
+                foreach (var game in Model.user.Games)
+                {
+                    if (game.Equals(item))
+                    {
+                        count++;
+                    }
+                }
+                if (count == 0)
+                {
+                  @: |
+                  @Html.ActionLink("Add to My Games", "Addgame", new { id = item.GameID })
+                }
+            }
+            @{
+                if (User.IsInRole("Admin"))
+                {
+                    @: |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.GameID })
+                    @:|
+                    @Html.ActionLink("Delete", "Delete", new { id = item.GameID })
+                }
+            }
         </td>
     </tr>
 }
 
 </table>
+
+<p>
+    @{
+        if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Create New", "Create")
+        }
+    }
+</p>

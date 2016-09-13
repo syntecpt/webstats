@@ -9,7 +9,7 @@ namespace webstats.Models
 {
     public class CreateScoreViewModel
     {
-        public List<Game> games { get; set; }
+        public List<Game> mygames { get; set; }
         public List<ApplicationUser> users { get; set; }
         public Score score { get; set; }
     }

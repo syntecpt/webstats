@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using webstats.Models;
+using System.Collections;
+using Microsoft.AspNet.Identity;
 
 namespace webstats.Controllers
 {
@@ -22,6 +24,36 @@ namespace webstats.Controllers
                 games = db.Games.ToList(),
                 users = db.Users.ToList(),
                 scores = db.Scores.ToList()
+            });
+        }
+
+        // GET: Scores/Userscore/{name}
+        public ActionResult Userscore(string Id)
+        {
+            if (Id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser applicationUser = db.Users.Where(b => b.UserName == Id).FirstOrDefault();
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+            List<Score> scores = new List<Score>();
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            users.Add(applicationUser);
+            foreach (var score in db.Scores)
+            {
+                if (score.UserID.Equals(applicationUser.Id))
+                {
+                    scores.Add(score);
+                }
+            }
+            return View(new ScoreViewModel
+            {
+                games = db.Games.ToList(),
+                users = users,
+                scores = scores
             });
         }
 
@@ -47,12 +79,28 @@ namespace webstats.Controllers
         }
 
         // GET: Scores/Submit
+        [Authorize]
         public ActionResult Submit()
         {
+            List <Game> games = new List<Game>();
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            if (User.IsInRole("Admin"))
+            {
+                users = db.Users.ToList();
+                games = db.Games.ToList();
+            }else
+            {
+                users.Add(db.Users.Find(User.Identity.GetUserId()));
+                foreach (var game in users.SingleOrDefault().Games)
+                {
+                    games.Add(game);
+                }
+            }
+
             return View(new CreateScoreViewModel
             {
-                games = db.Games.ToList(),
-                users = db.Users.ToList()
+                mygames = games,
+                users = users
             });
         }
 
@@ -61,6 +109,7 @@ namespace webstats.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Submit([Bind(Include = "ScoreID,GameID,UserID,ScoreDate,score")] Score score)
         {
             if (ModelState.IsValid)
@@ -69,10 +118,7 @@ namespace webstats.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.GameID = new SelectList(db.Games, "GameID", "name", score.GameID);
-            ViewBag.GameID = new SelectList(db.Games, "GameID", "name");
-            ViewBag.UserID = new SelectList(db.Users, "Id", "UserName");
-            return View(score);
+            return RedirectToAction("Index");
         }
 
         // GET: Scores/Edit/5
@@ -110,12 +156,7 @@ namespace webstats.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(new ScoreDetailsViewModel
-            {
-                games = db.Games.ToList(),
-                users = db.Users.ToList(),
-                score = score
-            });
+            return RedirectToAction("Index");
         }
 
         // GET: Scores/Delete/5

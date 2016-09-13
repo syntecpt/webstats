@@ -4,3 +4,7 @@ alem da homepage existe uma pagina de users em que se pode dar inspect a cada ut
 existe uma pagina games, em que aparece uma lista de todos os jogos disponíveis (e caso o user esteja authenticado pode associar o jogo à sua conta)
 existe uma pagina de highscores que mostra os highscores para cada jogo
 há tambem uma pagina de perfil em que cada user tem as infos da sua conta
+
+accounts in database:
+admin - Admin.9
+all other users - Pass.1

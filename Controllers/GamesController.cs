@@ -25,6 +25,27 @@ namespace webstats.Controllers
             });
         }
 
+        public ActionResult Search(string Id)
+        {
+            if (Id == null || Id == "")
+            {
+                return RedirectToAction("Index");
+            }
+            List<Game> games = new List<Game>();
+            foreach (var game in db.Games)
+            {
+                if (game.name.ToUpper().Contains(Id.ToUpper()))
+                {
+                    games.Add(game);
+                }
+            }
+            return View(new GameViewModel
+            {
+                games = games,
+                user = db.Users.Find(User.Identity.GetUserId())
+            });
+        }
+
         // GET: UserGames
         [Authorize]
         public ActionResult Mine()

@@ -28,6 +28,7 @@
 
     </dl>
 </div>
+@Html.ActionLink("Check User Scores", "../scores/userscore/", new { id = Model.UserName })
 <p>
     @{
         if (User.IsInRole("Admin"))

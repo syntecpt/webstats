@@ -1,0 +1,43 @@
+﻿@model IEnumerable<webstats.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Search Users with @Request.QueryString</h2>
+<form id="search" action="/users/search" method="get">
+    <input id="Id" name="Id" value="" style="width:100px;" />
+    <input id="submit" type="submit" style="font-weight:bold;" value="Search" />
+</form>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "../user", new { id = item.UserName })
+        </td><td>
+            @{
+                if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                    @:</td><td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                }
+            }
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Back to All Users", "Index")
+</div>

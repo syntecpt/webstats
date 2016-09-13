@@ -5,7 +5,12 @@
 }
 
 <h2>All Scores</h2>
-<a class="btn btn-default" href="/scores/userscore/@User.Identity.Name">My Scores &raquo;</a>
+@{ 
+    if (User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-default" href="/scores/userscore/@User.Identity.Name">My Scores &raquo;</a>
+    }
+}
 
 <p>
     @{
@@ -27,8 +32,8 @@
             @Html.DisplayNameFor(model => model.scores.FirstOrDefault().score)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.scores.FirstOrDefault().ScoreDate)
-        </th>
+    @Html.DisplayNameFor(model => model.scores.FirstOrDefault().ScoreDate)
+</th>
         <th></th>
     </tr>
 
@@ -40,7 +45,7 @@
                 {
                     if (user.Id.Equals(item.UserID))
                     {
-                        @Html.ActionLink(user.UserName, "Userscore", new { id = user.UserName })
+                        @Html.ActionLink(user.UserName, "../user/", new { id = user.UserName })
                     }
                 }
             }
@@ -51,7 +56,7 @@
                 {
                     if (game.GameID.Equals(item.GameID))
                     {
-                        @Html.DisplayFor(modelItem => game.name)
+                        @Html.ActionLink(game.name, "../games/details/", new { id = game.GameID })
                     }
                 }
             }

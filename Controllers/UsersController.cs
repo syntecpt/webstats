@@ -20,6 +20,22 @@ namespace webstats.Controllers
             return View(db.Users.ToList());
         }
 
+        public ActionResult Search(string Id)
+        {
+            if (Id == null || Id == "")
+            {
+                return RedirectToAction("Index");
+            }
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            foreach (var user in db.Users)
+            {
+                if (user.UserName.ToUpper().Contains(Id.ToUpper())){
+                    users.Add(user);
+                }
+            }
+            return View(users);
+        }
+
         // GET: Users/Details/5
         [Route("user/{UserName}")]
         public ActionResult Details(string UserName)

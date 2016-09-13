@@ -5,7 +5,16 @@
 }
 
 <h2>List of Games</h2>
-<a class="btn btn-default" href="/games/mine">My Games &raquo;</a>
+<form id="search" action="/games/search" method="get">
+    <input id="Id" name="Id" value="" style="width:100px;" />
+    <input id="submit" type="submit" style="font-weight:bold;" value="Search" />
+</form>
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-default" href="/scores/userscore/@User.Identity.Name">My Scores &raquo;</a>
+    }
+}
 <table class="table">
     <tr>
         <th>

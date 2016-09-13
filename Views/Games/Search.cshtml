@@ -1,0 +1,78 @@
+﻿@model webstats.Models.GameViewModel
+
+@{
+    ViewBag.Title = "Games";
+}
+
+<h2>Search Games with @Request.QueryString</h2>
+<form id="search" action="/games/search" method="get">
+    <input id="Id" name="Id" value="" style="width:100px;" />
+    <input id="submit" type="submit" style="font-weight:bold;" value="Search" />
+</form>
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-default" href="/scores/userscore/@User.Identity.Name">My Scores &raquo;</a>
+    }
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.games.FirstOrDefault().name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.games.FirstOrDefault().genre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.games) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.genre)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.GameID })
+            @{
+                int count = 0;
+                foreach (var game in Model.user.Games)
+                {
+                    if (game.Equals(item))
+                    {
+                        count++;
+                    }
+                }
+                if (count == 0)
+                {
+                  @: |
+                  @Html.ActionLink("Add to My Games", "Addgame", new { id = item.GameID })
+                }
+            }
+            @{
+                if (User.IsInRole("Admin"))
+                {
+                    @: |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.GameID })
+                    @:|
+                    @Html.ActionLink("Delete", "Delete", new { id = item.GameID })
+                }
+            }
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Back to All Games", "Index")
+</div>
+<p>
+    @{
+        if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Create New", "Create")
+        }
+    }
+</p>

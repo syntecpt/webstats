@@ -5,6 +5,7 @@ existe uma pagina games, em que aparece uma lista de todos os jogos disponíveis
 existe uma pagina de highscores que mostra os highscores para cada jogo
 há tambem uma pagina de perfil em que cada user tem as infos da sua conta
 
+Recomended account to use: "User"
 accounts in database:
-admin - Admin.9
+Admin - Admin.9
 all other users - Pass.1

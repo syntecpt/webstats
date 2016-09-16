@@ -44,48 +44,57 @@ namespace webstats.Migrations
                     genre = "Puzzle",
                     Users = new List<ApplicationUser>()
                 };
+                context.Games.AddOrUpdate(game);
                 game = new Game
                 {
                     name = "FlappyTale",
                     genre = "Arcade",
                     Users = new List<ApplicationUser>()
                 };
+                context.Games.AddOrUpdate(game);
                 game = new Game
                 {
                     name = "TreeDude",
                     genre = "Arcade",
                     Users = new List<ApplicationUser>()
                 };
+                context.Games.AddOrUpdate(game);
                 game = new Game
                 {
                     name = "RockClimber",
                     genre = "Platform",
                     Users = new List<ApplicationUser>()
                 };
+                context.Games.AddOrUpdate(game);
                 game = new Game
                 {
                     name = "Goal Scoring Revolution",
                     genre = "Sports",
                     Users = new List<ApplicationUser>()
                 };
+                context.Games.AddOrUpdate(game);
                 game = new Game
                 {
                     name = "Hoop This",
                     genre = "Arcade",
                     Users = new List<ApplicationUser>()
                 };
+                context.Games.AddOrUpdate(game);
                 game = new Game
                 {
                     name = "Space Fighters",
                     genre = "Arcade",
                     Users = new List<ApplicationUser>()
                 };
+                context.Games.AddOrUpdate(game);
+                context.Games.AddOrUpdate(floweytale);
                 game = new Game
                 {
                     name = "Wave Master",
                     genre = "Sports",
                     Users = new List<ApplicationUser>()
                 };
+                context.Games.AddOrUpdate(game);
             }
             context.SaveChanges();
             //users
